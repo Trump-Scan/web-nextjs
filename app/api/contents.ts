@@ -1,5 +1,4 @@
 import { Feed } from "@/app/types";
-import { feeds } from "@/app/mock";
 
 export interface FeedListResponse {
   feeds: Feed[];
@@ -7,27 +6,23 @@ export interface FeedListResponse {
   next_cursor: string | null;
 }
 
-const PAGE_SIZE = 5;
+const API_URL = process.env.NEXT_PUBLIC_API_URL || "http://localhost:3000";
 
 export async function fetchFeeds(
   cursor?: string,
-  pageSize: number = PAGE_SIZE
+  limit: number = 20
 ): Promise<FeedListResponse> {
-  // 네트워크 지연 시뮬레이션
-  await new Promise((resolve) => setTimeout(resolve, 500));
+  const params = new URLSearchParams();
+  if (cursor) params.append("cursor", cursor);
+  params.append("limit", String(limit));
 
-  // cursor 기반 페이지네이션: cursor는 마지막 피드의 id
-  const startIndex = cursor
-    ? feeds.findIndex((feed) => feed.id === Number(cursor)) + 1
-    : 0;
+  const response = await fetch(
+    `${API_URL}/api/v1/feeds/before?${params.toString()}`
+  );
 
-  const paginatedData = feeds.slice(startIndex, startIndex + pageSize);
-  const lastFeed = paginatedData[paginatedData.length - 1];
-  const hasNextPage = startIndex + pageSize < feeds.length;
+  if (!response.ok) {
+    throw new Error("피드를 불러오는데 실패했습니다");
+  }
 
-  return {
-    feeds: paginatedData,
-    count: feeds.length,
-    next_cursor: hasNextPage ? String(lastFeed.id) : null,
-  };
+  return response.json();
 }

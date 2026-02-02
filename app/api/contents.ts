@@ -1,31 +1,33 @@
-import { Content } from "@/app/types";
-import { contents } from "@/app/mock";
+import { Feed } from "@/app/types";
+import { feeds } from "@/app/mock";
 
-export interface FetchContentsResponse {
-  data: Content[];
-  nextPage: number | null;
-  totalPages: number;
+export interface FeedListResponse {
+  feeds: Feed[];
+  count: number;
+  next_cursor: string | null;
 }
 
 const PAGE_SIZE = 5;
 
-export async function fetchContents(
-  page: number = 1,
+export async function fetchFeeds(
+  cursor?: string,
   pageSize: number = PAGE_SIZE
-): Promise<FetchContentsResponse> {
+): Promise<FeedListResponse> {
   // 네트워크 지연 시뮬레이션
   await new Promise((resolve) => setTimeout(resolve, 500));
 
-  const startIndex = (page - 1) * pageSize;
-  const endIndex = startIndex + pageSize;
-  const paginatedData = contents.slice(startIndex, endIndex);
+  // cursor 기반 페이지네이션: cursor는 마지막 피드의 id
+  const startIndex = cursor
+    ? feeds.findIndex((feed) => feed.id === Number(cursor)) + 1
+    : 0;
 
-  const totalPages = Math.ceil(contents.length / pageSize);
-  const hasNextPage = page < totalPages;
+  const paginatedData = feeds.slice(startIndex, startIndex + pageSize);
+  const lastFeed = paginatedData[paginatedData.length - 1];
+  const hasNextPage = startIndex + pageSize < feeds.length;
 
   return {
-    data: paginatedData,
-    nextPage: hasNextPage ? page + 1 : null,
-    totalPages,
+    feeds: paginatedData,
+    count: feeds.length,
+    next_cursor: hasNextPage ? String(lastFeed.id) : null,
   };
 }

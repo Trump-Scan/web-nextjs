@@ -3,9 +3,9 @@
 import { useEffect, useRef, useCallback } from "react";
 import { useInfiniteQuery } from "@tanstack/react-query";
 
-import { Content } from "@/app/types";
+import { Feed } from "@/app/types";
 import Card from "@/app/components/Card";
-import { fetchContents } from "@/app/api/contents";
+import { fetchFeeds } from "@/app/api/contents";
 
 export default function CardList() {
   const observerRef = useRef<HTMLDivElement>(null);
@@ -19,10 +19,10 @@ export default function CardList() {
     isError,
     error,
   } = useInfiniteQuery({
-    queryKey: ["contents"],
-    queryFn: ({ pageParam }) => fetchContents(pageParam),
-    getNextPageParam: (lastPage) => lastPage.nextPage,
-    initialPageParam: 1,
+    queryKey: ["feeds"],
+    queryFn: ({ pageParam }) => fetchFeeds(pageParam),
+    getNextPageParam: (lastPage) => lastPage.next_cursor ?? undefined,
+    initialPageParam: undefined as string | undefined,
   });
 
   const handleObserver = useCallback(
@@ -64,12 +64,12 @@ export default function CardList() {
     );
   }
 
-  const allContents = data?.pages.flatMap((page) => page.data) ?? [];
+  const allFeeds = data?.pages.flatMap((page) => page.feeds) ?? [];
 
   return (
     <div className="flex flex-col gap-4 items-center p-4">
-      {allContents.map((content: Content) => (
-        <Card key={content.id} content={content} />
+      {allFeeds.map((feed: Feed) => (
+        <Card key={feed.id} feed={feed} />
       ))}
 
       {/* Intersection Observer 타겟 요소 */}
@@ -77,8 +77,8 @@ export default function CardList() {
         {isFetchingNextPage && (
           <div className="animate-pulse text-gray-500">더 불러오는 중...</div>
         )}
-        {!hasNextPage && allContents.length > 0 && (
-          <div className="text-gray-400">모든 콘텐츠를 불러왔습니다</div>
+        {!hasNextPage && allFeeds.length > 0 && (
+          <div className="text-gray-400">모든 피드를 불러왔습니다</div>
         )}
       </div>
     </div>

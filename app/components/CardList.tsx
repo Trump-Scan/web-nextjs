@@ -19,6 +19,7 @@ export default function CardList() {
   const topObserverRef = useRef<HTMLDivElement>(null);
   const handleTopObserverRef = useRef<ObserverCallback>(() => {});
   const handleBottomObserverRef = useRef<ObserverCallback>(() => {});
+  const isFirstTopIntersection = useRef(true);
 
   const {
     data,
@@ -78,7 +79,12 @@ export default function CardList() {
   const handleTopObserver = useCallback(
     (entries: IntersectionObserverEntry[]) => {
       const [target] = entries;
-      if (target.isIntersecting && hasPreviousPage && !isFetchingPreviousPage) {
+      if (!target.isIntersecting) return;
+      if (isFirstTopIntersection.current) {
+        isFirstTopIntersection.current = false;
+        return;
+      }
+      if (hasPreviousPage && !isFetchingPreviousPage) {
         fetchPreviousPage();
       }
     },

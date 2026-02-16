@@ -26,3 +26,22 @@ export async function fetchFeeds(
 
   return response.json();
 }
+
+export async function fetchFeedsAfter(
+  cursor: string,
+  limit: number = 20
+): Promise<FeedListResponse> {
+  const params = new URLSearchParams();
+  params.append("cursor", cursor);
+  params.append("limit", String(limit));
+
+  const response = await fetch(
+    `${API_URL}/api/v1/feeds/after?${params.toString()}`
+  );
+
+  if (!response.ok) {
+    throw new Error("피드를 불러오는데 실패했습니다");
+  }
+
+  return response.json();
+}

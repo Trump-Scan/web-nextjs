@@ -1,6 +1,6 @@
 "use client";
 
-import { useEffect, useRef, useCallback } from "react";
+import { useEffect, useRef, useCallback, useState } from "react";
 import { useInfiniteQuery } from "@tanstack/react-query";
 
 import { Feed } from "@/app/types";
@@ -15,11 +15,16 @@ type PageParam =
 type ObserverCallback = (entries: IntersectionObserverEntry[]) => void;
 
 export default function CardList() {
+  const [isAtTop, setIsAtTop] = useState(false);
+
   const observerRef = useRef<HTMLDivElement>(null);
   const topObserverRef = useRef<HTMLDivElement>(null);
   const handleTopObserverRef = useRef<ObserverCallback>(() => {});
   const handleBottomObserverRef = useRef<ObserverCallback>(() => {});
   const isFirstTopIntersection = useRef(true);
+  const pollTimeoutRef = useRef<ReturnType<typeof setTimeout> | null>(null);
+  const isAtTopRef = useRef(isAtTop);
+  const hasPreviousPageRef = useRef(false);
 
   const {
     data,
@@ -79,6 +84,7 @@ export default function CardList() {
   const handleTopObserver = useCallback(
     (entries: IntersectionObserverEntry[]) => {
       const [target] = entries;
+      setIsAtTop(target.isIntersecting);
       if (!target.isIntersecting) return;
       if (isFirstTopIntersection.current) {
         isFirstTopIntersection.current = false;
@@ -95,6 +101,37 @@ export default function CardList() {
     handleTopObserverRef.current = handleTopObserver;
     handleBottomObserverRef.current = handleBottomObserver;
   }, [handleTopObserver, handleBottomObserver]);
+
+  useEffect(() => {
+    isAtTopRef.current = isAtTop;
+  }, [isAtTop]);
+
+  useEffect(() => {
+    hasPreviousPageRef.current = hasPreviousPage;
+  }, [hasPreviousPage]);
+
+  useEffect(() => {
+    if (!isAtTop || !hasPreviousPage) return;
+
+    const scheduleNext = () => {
+      pollTimeoutRef.current = setTimeout(async () => {
+        if (!isAtTopRef.current || !hasPreviousPageRef.current) return;
+        await fetchPreviousPage();
+        if (isAtTopRef.current && hasPreviousPageRef.current) {
+          scheduleNext();
+        }
+      }, 5 * 60 * 1000);
+    };
+
+    scheduleNext();
+
+    return () => {
+      if (pollTimeoutRef.current) {
+        clearTimeout(pollTimeoutRef.current);
+        pollTimeoutRef.current = null;
+      }
+    };
+  }, [isAtTop, hasPreviousPage, fetchPreviousPage]);
 
   useEffect(() => {
     const element = observerRef.current;

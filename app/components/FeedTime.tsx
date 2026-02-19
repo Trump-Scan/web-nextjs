@@ -2,9 +2,9 @@
 
 import dayjs from "dayjs";
 
-export default function FeedTime({ date }: { date: string }) {
+export default function FeedTime({ publishedAt }: { publishedAt: string }) {
   const now = dayjs();
-  const diff = now.diff(dayjs(date), "hour");
+  const diff = now.diff(dayjs(publishedAt), "hour");
 
   if (diff < 24) {
     return <div>{diff}시간 전</div>;

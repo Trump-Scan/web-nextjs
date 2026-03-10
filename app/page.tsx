@@ -3,9 +3,11 @@ import CardList from "@/app/components/CardList";
 
 export default function Home() {
   return (
-    <div>
+    <main>
       <Header />
-      <CardList />
-    </div>
+      <section aria-label="트럼프 발언·기사 목록">
+        <CardList />
+      </section>
+    </main>
   );
 }

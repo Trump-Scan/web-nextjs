@@ -1,4 +1,4 @@
-export default function Home() {
+export default function Header() {
   return (
     <header className="flex gap-2 flex-col bg-white p-4 shadow-sm">
       <h1 className="text-2xl font-bold">🇺🇸 Trump Scan</h1>

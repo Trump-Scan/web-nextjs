@@ -1,4 +1,4 @@
-# Trump Scan With Cursor AI
+# Trump Saith With Cursor AI
 
 트럼프 관련 뉴스·피드 요약을 한곳에서 보는 뷰어입니다.
 

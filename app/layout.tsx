@@ -13,43 +13,46 @@ const geistMono = Geist_Mono({
   subsets: ["latin"],
 });
 
-const siteUrl = process.env.NEXT_PUBLIC_SITE_URL ?? "https://trump-scan.example.com";
+const siteUrl =
+  process.env.NEXT_PUBLIC_SITE_URL ?? "https://trump-saith.example.com";
+
+const metaTitle = "트럼프 가라사대 · 발언·기사 모음 | Trump Saith";
+const metaDescription =
+  "트럼프 가라사대 | 대통령이 말하길 | 트럼프 발언·기사 모음을 한곳에서.";
 
 export const metadata: Metadata = {
   metadataBase: new URL(siteUrl),
-  title: "트럼프 발언 · 트럼프 기사 모음 | Trump Scan",
-  description:
-    "트럼프 발언과 트럼프 기사를 한곳에서 모아보세요. 트럼프 발언 모음, 트럼프 기사 모음으로 최신 소셜·뉴스 피드를 확인할 수 있습니다.",
+  title: metaTitle,
+  description: metaDescription,
   keywords: [
+    "트럼프 가라사대",
     "트럼프 발언",
     "트럼프 기사",
     "트럼프 기사 모음",
     "트럼프 발언 모음",
-    "Trump Scan",
+    "Trump Saith",
   ],
   openGraph: {
-    title: "트럼프 발언 · 트럼프 기사 모음 | Trump Scan",
-    description:
-      "트럼프 발언과 트럼프 기사를 한곳에서 모아보세요. 트럼프 발언 모음, 트럼프 기사 모음으로 최신 소셜·뉴스 피드를 확인할 수 있습니다.",
+    title: metaTitle,
+    description: metaDescription,
     type: "website",
     locale: "ko_KR",
     url: siteUrl,
   },
   twitter: {
     card: "summary_large_image",
-    title: "트럼프 발언 · 트럼프 기사 모음 | Trump Scan",
-    description:
-      "트럼프 발언과 트럼프 기사를 한곳에서 모아보세요. 트럼프 발언 모음, 트럼프 기사 모음으로 최신 소셜·뉴스 피드를 확인할 수 있습니다.",
+    title: metaTitle,
+    description: metaDescription,
   },
 };
 
 const websiteJsonLd = {
   "@context": "https://schema.org",
   "@type": "WebSite",
-  name: "Trump Scan",
+  name: "Trump Saith",
   url: siteUrl,
-  description:
-    "트럼프 발언과 트럼프 기사를 한곳에서 모아보세요. 트럼프 발언 모음, 트럼프 기사 모음으로 최신 소셜·뉴스 피드를 확인할 수 있습니다.",
+  description: metaDescription,
+  slogan: "트럼프 가라사대 — 대통령이 말하길",
 };
 
 export default function RootLayout({

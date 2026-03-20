@@ -4,7 +4,7 @@ import FeedTime from "@/app/components/FeedTime";
 export default function Card({ feed }: { feed: Feed }) {
   const { summary, tags, channel, link, published_at } = feed;
   return (
-    <div className="flex flex-col bg-white rounded-lg w-2/3 max-w-sm text-sm shadow-md">
+    <div className="flex flex-col bg-white rounded-lg max-w-sm text-sm shadow-md">
       <Header channel={channel} publishedAt={published_at} />
       <FeedContent summary={summary} tags={tags} />
       <Footer channel={channel} link={link} />

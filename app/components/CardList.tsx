@@ -78,7 +78,7 @@ export default function CardList() {
         fetchNextPage();
       }
     },
-    [fetchNextPage, hasNextPage, isFetchingNextPage]
+    [fetchNextPage, hasNextPage, isFetchingNextPage],
   );
 
   const handleTopObserver = useCallback(
@@ -94,7 +94,7 @@ export default function CardList() {
         fetchPreviousPage();
       }
     },
-    [fetchPreviousPage, hasPreviousPage, isFetchingPreviousPage]
+    [fetchPreviousPage, hasPreviousPage, isFetchingPreviousPage],
   );
 
   useEffect(() => {
@@ -114,13 +114,16 @@ export default function CardList() {
     if (!isAtTop || !hasPreviousPage) return;
 
     const scheduleNext = () => {
-      pollTimeoutRef.current = setTimeout(async () => {
-        if (!isAtTopRef.current || !hasPreviousPageRef.current) return;
-        await fetchPreviousPage();
-        if (isAtTopRef.current && hasPreviousPageRef.current) {
-          scheduleNext();
-        }
-      }, 5 * 60 * 1000);
+      pollTimeoutRef.current = setTimeout(
+        async () => {
+          if (!isAtTopRef.current || !hasPreviousPageRef.current) return;
+          await fetchPreviousPage();
+          if (isAtTopRef.current && hasPreviousPageRef.current) {
+            scheduleNext();
+          }
+        },
+        5 * 60 * 1000,
+      );
     };
 
     scheduleNext();
@@ -139,7 +142,7 @@ export default function CardList() {
 
     const observer = new IntersectionObserver(
       (entries) => handleBottomObserverRef.current?.(entries),
-      { threshold: 0.1 }
+      { threshold: 0.1 },
     );
 
     observer.observe(element);
@@ -153,7 +156,7 @@ export default function CardList() {
 
     const observer = new IntersectionObserver(
       (entries) => handleTopObserverRef.current?.(entries),
-      { threshold: 0.1 }
+      { threshold: 0.1 },
     );
 
     observer.observe(element);
@@ -184,7 +187,7 @@ export default function CardList() {
       {/* 상단 옵저버: 목록 맨 위 도달 시 최신 데이터 로드 */}
       <div
         ref={topObserverRef}
-        className="w-full py-4 flex justify-center min-h-8"
+        className="w-full py-2 flex justify-center min-h-4"
       ></div>
 
       {allFeeds.map((feed: Feed) => (

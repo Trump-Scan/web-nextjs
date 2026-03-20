@@ -40,7 +40,7 @@ const FeedContent = ({
       <div>
         <span>{summary}</span>
       </div>
-      <div className="flex gap-2 text-blue-700">
+      <div className="flex gap-2 text-blue-700 flex-wrap">
         {tags.map((tag) => (
           <span key={tag}>{tag}</span>
         ))}

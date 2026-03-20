@@ -21,10 +21,13 @@ const siteUrl =
 
 const metaTitle = "트럼프 가라사대 · 발언·기사 모음 | Trump Saith";
 const metaDescription =
-  "트럼프 가라사대 | 대통령이 말하길 | 트럼프 발언·기사 모음을 한곳에서.";
+  "트럼프 가라사대 - 트럼프 발언·기사 모음을 한곳에서 | Trump Saith — curated Donald Trump statements, quotes, and news in one place.";
 
 export const metadata: Metadata = {
   metadataBase: new URL(siteUrl),
+  alternates: {
+    canonical: "/",
+  },
   verification: {
     google: "n2KZg93ELhQdUdpsK9wmI8WXa0HIBH2g8yzHbbLtx48",
   },
@@ -37,11 +40,17 @@ export const metadata: Metadata = {
     "트럼프 기사 모음",
     "트럼프 발언 모음",
     "Trump Saith",
+    "Donald Trump",
+    "Trump quotes",
+    "Trump statements",
+    "Trump news",
+    "President Trump",
   ],
   openGraph: {
     title: metaTitle,
     description: metaDescription,
     type: "website",
+    siteName: "Trump Saith",
     locale: "ko_KR",
     url: siteUrl,
   },

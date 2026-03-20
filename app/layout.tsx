@@ -16,8 +16,7 @@ const geistMono = Geist_Mono({
   subsets: ["latin"],
 });
 
-const siteUrl =
-  process.env.NEXT_PUBLIC_SITE_URL ?? "https://trump-saith.example.com";
+const siteUrl = process.env.NEXT_PUBLIC_SITE_URL || "";
 
 const metaTitle = "트럼프 가라사대 · 발언·기사 모음 | Trump Saith";
 const metaDescription =

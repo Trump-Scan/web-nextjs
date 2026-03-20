@@ -25,6 +25,9 @@ const metaDescription =
 
 export const metadata: Metadata = {
   metadataBase: new URL(siteUrl),
+  verification: {
+    google: "n2KZg93ELhQdUdpsK9wmI8WXa0HIBH2g8yzHbbLtx48",
+  },
   title: metaTitle,
   description: metaDescription,
   keywords: [

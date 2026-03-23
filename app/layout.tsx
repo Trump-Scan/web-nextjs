@@ -21,7 +21,7 @@ const siteUrl = process.env.NEXT_PUBLIC_SITE_URL || "";
 
 const metaTitle = "트럼프 가라사대 · 발언·기사 모음 | Trump Saith";
 const metaDescription =
-  "트럼프 가라사대 - 트럼프 발언·기사 모음을 한곳에서 | Trump Saith — curated Donald Trump statements, quotes, and news in one place.";
+  "트럼프 가라사대 - 트럼프 발언·기사 모음을 한곳에서. 이란 전쟁 등 국제 이슈 관련 발언·기사 | Trump Saith — curated Donald Trump statements, quotes, and news in one place, including major issues such as the Iran conflict.";
 
 export const metadata: Metadata = {
   metadataBase: new URL(siteUrl),
@@ -45,6 +45,14 @@ export const metadata: Metadata = {
     "Trump statements",
     "Trump news",
     "President Trump",
+    "이란 전쟁",
+    "이란",
+    "미국 이란",
+    "트럼프 이란",
+    "Iran war",
+    "Iran conflict",
+    "US Iran",
+    "Trump Iran",
   ],
   openGraph: {
     title: metaTitle,

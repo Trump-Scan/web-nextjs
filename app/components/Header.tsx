@@ -1,11 +1,9 @@
 "use client";
-
-import { useState } from "react";
-
 import HeaderSearch from "@/app/components/HeaderSearch";
+import { useSearch } from "@/app/providers/SearchProvider";
 
 export default function Header() {
-  const [searchOpen, setSearchOpen] = useState(false);
+  const { searchOpen, setSearchOpen } = useSearch();
 
   return (
     <header className="sticky top-0 z-20 flex w-full flex-col gap-2 bg-white p-4 shadow-sm">

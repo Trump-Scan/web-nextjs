@@ -15,7 +15,7 @@ export default function HeaderSearch({
   open,
   onOpenChange,
 }: HeaderSearchProps) {
-  const { setSearchKeyword } = useSearch();
+  const { searchKeyword, setSearchKeyword } = useSearch();
   const searchToggleRef = useRef<HTMLButtonElement>(null);
   const [keyword, setKeyword] = useState("");
   const debouncedKeyword = useDebounce(keyword, DEBOUNCE_MS);
@@ -34,6 +34,15 @@ export default function HeaderSearch({
       setSearchKeyword(trimmedKeyword);
     }
   }, [debouncedKeyword, setSearchKeyword]);
+
+  useEffect(() => {
+    if (!open) return;
+    if (keyword === searchKeyword) {
+      return;
+    }
+
+    setKeyword(searchKeyword);
+  }, [searchKeyword]);
 
   if (open) {
     return (

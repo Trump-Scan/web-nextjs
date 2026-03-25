@@ -1,8 +1,11 @@
+"use client";
+
 import Image from "next/image";
 
 import type { Feed } from "@/app/types";
 import FeedTime from "@/app/components/FeedTime";
 import { getChannelIconSrc } from "@/app/lib/channelIcon";
+import { useSearch } from "@/app/providers/SearchProvider";
 
 export default function Card({ feed }: { feed: Feed }) {
   const { summary, tags, channel, link, published_at } = feed;
@@ -50,6 +53,8 @@ const FeedContent = ({
   summary: string;
   tags: string[];
 }) => {
+  const { setSearchKeyword, setSearchOpen } = useSearch();
+
   return (
     <div className="flex flex-col gap-4 p-4">
       <div>
@@ -57,7 +62,17 @@ const FeedContent = ({
       </div>
       <div className="flex gap-2 text-blue-700 flex-wrap">
         {tags.map((tag) => (
-          <span key={tag}>{tag}</span>
+          <button
+            key={tag}
+            type="button"
+            onClick={() => {
+              setSearchKeyword(tag);
+              setSearchOpen(true);
+            }}
+            className="cursor-pointer text-blue-700 hover:underline focus:outline-none"
+          >
+            {tag}
+          </button>
         ))}
       </div>
     </div>

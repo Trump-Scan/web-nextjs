@@ -54,7 +54,7 @@ export default function HeaderSearch({
           id="header-search"
           type="search"
           name="keyword"
-          placeholder="검색…"
+          placeholder="태그 검색"
           autoFocus
           value={keyword}
           onChange={(e) => {

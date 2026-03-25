@@ -3,6 +3,8 @@
 import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
 import { useState } from "react";
 
+const staleTime = 5 * 60 * 1000;
+
 export default function QueryProvider({
   children,
 }: {
@@ -12,11 +14,9 @@ export default function QueryProvider({
     () =>
       new QueryClient({
         defaultOptions: {
-          queries: {
-            staleTime: 5 * 60 * 1000,
-          },
+          queries: { staleTime },
         },
-      })
+      }),
   );
 
   return (

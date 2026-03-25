@@ -14,6 +14,8 @@ type PageParam =
 
 type ObserverCallback = (entries: IntersectionObserverEntry[]) => void;
 
+const POLLING_INTERVAL = 5 * 60 * 1000;
+
 export default function CardList() {
   const [isAtTop, setIsAtTop] = useState(false);
 
@@ -114,16 +116,13 @@ export default function CardList() {
     if (!isAtTop || !hasPreviousPage) return;
 
     const scheduleNext = () => {
-      pollTimeoutRef.current = setTimeout(
-        async () => {
-          if (!isAtTopRef.current || !hasPreviousPageRef.current) return;
-          await fetchPreviousPage();
-          if (isAtTopRef.current && hasPreviousPageRef.current) {
-            scheduleNext();
-          }
-        },
-        5 * 60 * 1000,
-      );
+      pollTimeoutRef.current = setTimeout(async () => {
+        if (!isAtTopRef.current || !hasPreviousPageRef.current) return;
+        await fetchPreviousPage();
+        if (isAtTopRef.current && hasPreviousPageRef.current) {
+          scheduleNext();
+        }
+      }, POLLING_INTERVAL);
     };
 
     scheduleNext();

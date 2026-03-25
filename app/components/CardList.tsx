@@ -6,6 +6,7 @@ import { useInfiniteQuery } from "@tanstack/react-query";
 import { Feed } from "@/app/types";
 import Card from "@/app/components/Card";
 import { fetchFeeds, fetchFeedsAfter } from "@/app/api/contents";
+import { useSearch } from "@/app/providers/SearchProvider";
 
 type PageParam =
   | undefined
@@ -17,6 +18,7 @@ type ObserverCallback = (entries: IntersectionObserverEntry[]) => void;
 const POLLING_INTERVAL = 5 * 60 * 1000;
 
 export default function CardList() {
+  const { searchKeyword } = useSearch();
   const [isAtTop, setIsAtTop] = useState(false);
 
   const observerRef = useRef<HTMLDivElement>(null);
@@ -40,17 +42,17 @@ export default function CardList() {
     isError,
     error,
   } = useInfiniteQuery({
-    queryKey: ["feeds"],
+    queryKey: ["feeds", searchKeyword],
     queryFn: async ({ pageParam }: { pageParam: PageParam }) => {
       // 초기 로드 시에는 undefined
       if (pageParam === undefined) {
-        return fetchFeeds();
+        return fetchFeeds(undefined, 20, searchKeyword);
       }
       if (pageParam.direction === "prev") {
-        const res = await fetchFeedsAfter(pageParam.cursor);
+        const res = await fetchFeedsAfter(pageParam.cursor, 20, searchKeyword);
         return { ...res, feeds: res.feeds.slice().reverse() };
       } else {
-        return fetchFeeds(pageParam.cursor);
+        return fetchFeeds(pageParam.cursor, 20, searchKeyword);
       }
     },
     getNextPageParam: (lastPage) => {

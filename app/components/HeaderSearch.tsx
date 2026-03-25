@@ -1,6 +1,7 @@
 "use client";
 
 import { useDebounce } from "@/hooks/useDebounce";
+import { useSearch } from "@/app/providers/SearchProvider";
 import { useCallback, useEffect, useRef, useState } from "react";
 
 const DEBOUNCE_MS = 300;
@@ -14,6 +15,7 @@ export default function HeaderSearch({
   open,
   onOpenChange,
 }: HeaderSearchProps) {
+  const { setSearchKeyword } = useSearch();
   const searchToggleRef = useRef<HTMLButtonElement>(null);
   const [keyword, setKeyword] = useState("");
   const debouncedKeyword = useDebounce(keyword, DEBOUNCE_MS);
@@ -27,11 +29,11 @@ export default function HeaderSearch({
     const trimmedKeyword = debouncedKeyword.trim();
 
     if (trimmedKeyword.length === 0) {
-      // TODO: 검색 결과 초기화
+      setSearchKeyword("");
     } else {
-      // TODO: 검색 결과 업데이트
+      setSearchKeyword(trimmedKeyword);
     }
-  }, [debouncedKeyword]);
+  }, [debouncedKeyword, setSearchKeyword]);
 
   if (open) {
     return (

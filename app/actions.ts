@@ -12,10 +12,18 @@ const API_URL =
 export async function fetchFeeds(
   cursor?: string,
   limit: number = 20,
+  search?: string,
 ): Promise<FeedListResponse> {
   const params = new URLSearchParams();
-  if (cursor) params.append("cursor", cursor);
   params.append("limit", String(limit));
+
+  if (cursor) {
+    params.append("cursor", cursor);
+  }
+
+  if (search) {
+    params.append("tags", search);
+  }
 
   const response = await fetch(
     `${API_URL}/api/v1/feeds/before?${params.toString()}`,
@@ -31,10 +39,15 @@ export async function fetchFeeds(
 export async function fetchFeedsAfter(
   cursor: string,
   limit: number = 20,
+  search?: string,
 ): Promise<FeedListResponse> {
   const params = new URLSearchParams();
   params.append("cursor", cursor);
   params.append("limit", String(limit));
+
+  if (search) {
+    params.append("tags", search);
+  }
 
   const response = await fetch(
     `${API_URL}/api/v1/feeds/after?${params.toString()}`,

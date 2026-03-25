@@ -18,7 +18,7 @@ export default function FeedTime({ publishedAt }: { publishedAt: string }) {
 
   // 1시간 이내
   if (elapsedMs < 60 * 60 * 1000) {
-    const minutes = Math.floor((elapsedMs / 60) * 1000);
+    const minutes = Math.floor(elapsedMs / (60 * 1000));
     return <div>{minutes}분 전</div>;
   }
 

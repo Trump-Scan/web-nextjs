@@ -69,7 +69,7 @@ const FeedContent = ({
               setSearchKeyword(tag);
               setSearchOpen(true);
             }}
-            className="cursor-pointer text-blue-700 hover:underline focus:outline-none"
+            className="cursor-pointer rounded-sm text-blue-700 hover:underline focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-blue-600 focus-visible:ring-offset-2"
           >
             {tag}
           </button>
@@ -86,7 +86,7 @@ const Footer = ({ channel, link }: { channel: string; link: string }) => {
         href={link}
         target="_blank"
         rel="noopener noreferrer"
-        className="block text-center p-2 rounded-sm border border-blue-700 text-blue-700 text-sm w-full"
+        className="block w-full rounded-sm border border-blue-700 p-2 text-center text-sm text-blue-700 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-blue-600 focus-visible:ring-offset-2"
       >
         {channel}에서 보기 ↗
       </a>

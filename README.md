@@ -41,6 +41,12 @@ pnpm dev
 
 ### 환경 변수
 
-| 변수                  | 설명                                               |
-| --------------------- | -------------------------------------------------- |
-| `NEXT_PUBLIC_API_URL` | API 베이스 URL (미설정 시 `http://localhost:3000`) |
+로컬 온보딩은 루트의 `.env.example`을 복사해 `.env.local`로 두고 값을 채우면 됩니다.
+
+| 변수                            | 사용 위치                           | 설명                                                                                                                                                               |
+| ------------------------------- | ----------------------------------- | ------------------------------------------------------------------------------------------------------------------------------------------------------------------ |
+| `API_URL`                       | 서버 폴백                           | Backend API URL.                                                                                                                                                   |
+| `NEXT_PUBLIC_SITE_URL`          | 메타·사이트맵·robots·JSON-LD        | 공개 사이트의 절대 URL(권장: `https://your-domain.com`). 비어 있으면 Vercel에서는 `VERCEL_URL` 기반 `https://…`, 그 외에는 `http://localhost:3000`으로 대체됩니다. |
+| `NEXT_PUBLIC_GA_MEASUREMENT_ID` | `app/layout.tsx` (Google Analytics) | GA4 측정 ID(`G-XXXXXXXXXX`). 비어 있으면 태그는 주입되지 않습니다.                                                                                                 |
+
+`VERCEL_URL`은 Vercel이 자동으로 넣으며, `NEXT_PUBLIC_SITE_URL`이 없을 때 사이트 URL 추론에만 사용됩니다.

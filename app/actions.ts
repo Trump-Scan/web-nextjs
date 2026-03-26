@@ -1,13 +1,8 @@
 "use server";
 
-import { Feed } from "@/app/types";
 import type { FeedListResponse } from "@/app/api/contents";
-import { revalidatePath } from "next/cache";
 
-const API_URL =
-  process.env.API_URL ||
-  process.env.NEXT_PUBLIC_API_URL ||
-  "http://localhost:3000";
+const API_URL = process.env.API_URL || "http://localhost:3000";
 
 export async function fetchFeeds(
   cursor?: string,

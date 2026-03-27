@@ -28,20 +28,24 @@ const Header = ({
   const iconSrc = getChannelIconSrc(channel);
 
   return (
-    <div className="flex items-center gap-2 p-4 border-b border-gray-200 text-gray-600 flex-wrap">
-      {iconSrc ? (
-        <Image
-          src={iconSrc}
-          alt={`${channel} 아이콘`}
-          width={24}
-          height={24}
-          className="rounded-full object-cover w-6 h-6 shrink-0"
-        />
-      ) : (
-        <div className="rounded-full bg-gray-200 w-6 h-6 shrink-0" />
-      )}
-      <span>{channel}</span>
-      <FeedTime publishedAt={publishedAt} />
+    <div className="flex items-center justify-between gap-2 p-4 border-b border-gray-200 text-gray-600">
+      <div className="flex min-w-0 items-center gap-2">
+        {iconSrc ? (
+          <Image
+            src={iconSrc}
+            alt={`${channel} 아이콘`}
+            width={24}
+            height={24}
+            className="rounded-full object-cover w-6 h-6 shrink-0"
+          />
+        ) : (
+          <div className="rounded-full bg-gray-200 w-6 h-6 shrink-0" />
+        )}
+        <span className="truncate">{channel}</span>
+      </div>
+      <div className="shrink-0">
+        <FeedTime publishedAt={publishedAt} />
+      </div>
     </div>
   );
 };
